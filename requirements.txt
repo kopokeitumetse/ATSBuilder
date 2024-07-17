@@ -3,4 +3,5 @@ streamlit
 Pillow
 pdf2image
 google-generativeai
-PyPDF2
+PyPDF2google-api-core
+tenacity
