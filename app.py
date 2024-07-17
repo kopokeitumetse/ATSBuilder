@@ -174,7 +174,7 @@ How do you handle conflicts or disagreements in a team setting? Can you give an 
 #        response=get_gemini_response(input_prompt1,pdf_content,input_text)
    #     st.subheader("The Repsonse is")
   ##  else:
-  #      st.write("Please uplaod the resume")
+    #   st.write("Please uplaod the resume")
 
 if submit3:
     if uploaded_file is not None:
