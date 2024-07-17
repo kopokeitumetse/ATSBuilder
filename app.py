@@ -4,11 +4,18 @@ import os
 import PyPDF2 as pdf
 from dotenv import load_dotenv
 import json
+from google.api_core import exceptions
+from tenacity import retry, stop_after_attempt, wait_exponential, retry_if_exception_type
 
 load_dotenv() ## load all our environment variables
 
 genai.configure(api_key=os.getenv("GOOGLE_API_KEY"))
 
+@retry(
+    stop=stop_after_attempt(6),
+    wait=wait_exponential(multiplier=1, min=4, max=10),
+    retry=retry_if_exception_type(exceptions.InternalServerError)
+)
 def get_gemini_response(input,pdf_cotent,prompt):
     model=genai.GenerativeModel('gemini-1.5-pro')
     response=model.generate_content([input,pdf_cotent,prompt])
@@ -34,7 +41,7 @@ if uploaded_file is not None:
     st.write("PDF Uploaded Successfully")
 
 
-#submit1 = st.button("Tell Me About the Resume")
+submit1 = st.button("Tell Me About the Resume")
 
 submit3 = st.button("Percentage match")
 
@@ -169,45 +176,78 @@ How would you describe your communication and interpersonal skills? Can you prov
 Describe a situation where you had to work closely with a team to achieve a common goal. What was your role, and how did you ensure effective collaboration?
 How do you handle conflicts or disagreements in a team setting? Can you give an example of a time when you successfully resolved a conflict?
 """
-#if submit1:
-#    if uploaded_file is not None:
-#        response=get_gemini_response(input_prompt1,pdf_content,input_text)
-   #     st.subheader("The Repsonse is")
-  ##  else:
-    #   st.write("Please uplaod the resume")
 
-if submit3:
-    if uploaded_file is not None:
-        pdf_content=input_pdf_setup(uploaded_file)
-        response=get_gemini_response(input_prompt3,pdf_content,input_text)
-        st.subheader("The Repsonse is")
-        st.write(response)
-    else:
-        st.write("Please uplaod the resume")
+if submit1:
+    try:
+        if uploaded_file is not None:
+            pdf_content=input_pdf_setup(uploaded_file)
+            response=get_gemini_response(input_prompt1,pdf_content,input_text)
+            st.subheader("The Repsonse is")
+            st.write(response)
+        else:
+            st.write("Please uplaod the resume")
+    except exceptions.InternalServerError as e:
+        st.error(f"Failed after multiple retries: {e}. Please try again later.")
+    except Exception as e:
+        st.error(f"An unexpected error occurred: {e}")
+
+
+elif submit3:
+    try:
+        if uploaded_file is not None:
+            pdf_content=input_pdf_setup(uploaded_file)
+            response=get_gemini_response(input_prompt3,pdf_content,input_text)
+            st.subheader("The Repsonse is")
+            st.write(response)
+        else:
+            st.write("Please uplaod the resume")
+
+    except exceptions.InternalServerError as e:
+        st.error(f"Failed after multiple retries: {e}. Please try again later.")
+    except Exception as e:
+        st.error(f"An unexpected error occurred: {e}")
 
 elif submit4:
-    if uploaded_file is not None:
-        pdf_content=input_pdf_setup(uploaded_file)
-        response=get_gemini_response(input_prompt4,pdf_content,input_text)
-        st.subheader("The Repsonse is")
-        st.write(response)
-    else:
-        st.write("Please uplaod the resume")
+    try: 
+        if uploaded_file is not None:
+            pdf_content=input_pdf_setup(uploaded_file)
+            response=get_gemini_response(input_prompt4,pdf_content,input_text)
+            st.subheader("The Repsonse is")
+            st.write(response)
+        else:
+            st.write("Please uplaod the resume")
+    except exceptions.InternalServerError as e:
+        st.error(f"Failed after multiple retries: {e}. Please try again later.")
+    except Exception as e:
+        st.error(f"An unexpected error occurred: {e}")
+
 
 elif submit5:
-    if uploaded_file is not None:
-        pdf_content=input_pdf_setup(uploaded_file)
-        response=get_gemini_response(input_prompt5,pdf_content,input_text)
-        st.subheader("The Repsonse is")
-        st.write(response)
-    else:
-        st.write("Please uplaod the resume")
+    try:
+
+        if uploaded_file is not None:
+            pdf_content=input_pdf_setup(uploaded_file)
+            response=get_gemini_response(input_prompt5,pdf_content,input_text)
+            st.subheader("The Repsonse is")
+            st.write(response)
+        else:
+            st.write("Please uplaod the resume")
+    except exceptions.InternalServerError as e:
+        st.error(f"Failed after multiple retries: {e}. Please try again later.")
+    except Exception as e:
+        st.error(f"An unexpected error occurred: {e}")
 
 elif submit6:
-    if uploaded_file is not None:
-        pdf_content=input_pdf_setup(uploaded_file)
-        response=get_gemini_response(input_prompt6,pdf_content,input_text)
-        st.subheader("The Repsonse is")
-        st.write(response)
-    else:
-        st.write("Please uplaod the resume")
+    try:
+
+        if uploaded_file is not None:
+            pdf_content=input_pdf_setup(uploaded_file)
+            response=get_gemini_response(input_prompt6,pdf_content,input_text)
+            st.subheader("The Repsonse is")
+            st.write(response)
+        else:
+            st.write("Please uplaod the resume")
+    except exceptions.InternalServerError as e:
+        st.error(f"Failed after multiple retries: {e}. Please try again later.")
+    except Exception as e:
+        st.error(f"An unexpected error occurred: {e}")
