@@ -34,7 +34,7 @@ if uploaded_file is not None:
     st.write("PDF Uploaded Successfully")
 
 
-submit1 = st.button("Tell Me About the Resume")
+#submit1 = st.button("Tell Me About the Resume")
 
 submit3 = st.button("Percentage match")
 
@@ -169,16 +169,14 @@ How would you describe your communication and interpersonal skills? Can you prov
 Describe a situation where you had to work closely with a team to achieve a common goal. What was your role, and how did you ensure effective collaboration?
 How do you handle conflicts or disagreements in a team setting? Can you give an example of a time when you successfully resolved a conflict?
 """
-if submit1:
-    if uploaded_file is not None:
-        pdf_content=input_pdf_setup(uploaded_file)
-        response=get_gemini_response(input_prompt1,pdf_content,input_text)
-        st.subheader("The Repsonse is")
-        st.write(response)
-    else:
-        st.write("Please uplaod the resume")
+#if submit1:
+#    if uploaded_file is not None:
+#        response=get_gemini_response(input_prompt1,pdf_content,input_text)
+   #     st.subheader("The Repsonse is")
+  ##  else:
+  #      st.write("Please uplaod the resume")
 
-elif submit3:
+if submit3:
     if uploaded_file is not None:
         pdf_content=input_pdf_setup(uploaded_file)
         response=get_gemini_response(input_prompt3,pdf_content,input_text)
