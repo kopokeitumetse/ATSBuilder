@@ -12,7 +12,7 @@ load_dotenv() ## load all our environment variables
 genai.configure(api_key=os.getenv("GOOGLE_API_KEY"))
 
 @retry(
-    stop=stop_after_attempt(6),
+    stop=stop_after_attempt(2),
     wait=wait_exponential(multiplier=1, min=4, max=10),
     retry=retry_if_exception_type(exceptions.InternalServerError)
 )
